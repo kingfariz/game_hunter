@@ -18,7 +18,7 @@ Future<Response> getConnect({
   try {
     return await dio.get(endpoint, queryParameters: {
       'page': page,
-      "keys": Params.apiKey,
+      "key": Params.apiKey,
       "page_size": pageSize,
       "platforms": platform,
       "ordering": ordering,

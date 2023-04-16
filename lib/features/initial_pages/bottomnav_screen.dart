@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hunter/features/home/bloc/game_bloc.dart';
 import 'package:game_hunter/features/home/screen/home_screen.dart';
 import '../../helpers/themes.dart';
 
@@ -21,13 +22,25 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   Widget body() {
     switch (currentIndex) {
       case 0:
-        return const HomeScreen();
+        return BlocProvider(
+          create: (context) => GameBloc(),
+          child: const HomeScreen(),
+        );
       case 1:
-        return const HomeScreen();
+        return BlocProvider(
+          create: (context) => GameBloc(),
+          child: const HomeScreen(),
+        );
       case 2:
-        return const HomeScreen();
+        return BlocProvider(
+          create: (context) => GameBloc(),
+          child: const HomeScreen(),
+        );
       default:
-        return const HomeScreen();
+        return BlocProvider(
+          create: (context) => GameBloc(),
+          child: const HomeScreen(),
+        );
     }
   }
 
