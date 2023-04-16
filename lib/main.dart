@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:game_hunter/features/initial_pages/splash_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +11,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Game Hunter'),
-        ),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Sample Project',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: const SplashScreen(),
     );
   }
 }
