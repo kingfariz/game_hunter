@@ -17,16 +17,16 @@ class GameModel {
     this.userPlatforms,
   });
 
-  final int? count;
+  final String? count;
   final String? next;
   final dynamic previous;
   final List<Result>? results;
   final bool? userPlatforms;
 
   factory GameModel.fromJson(Map<String, dynamic> json) => GameModel(
-        count: json["count"],
-        next: json["next"],
-        previous: json["previous"],
+        count: json["count"].toString(),
+        next: json["next"].toString(),
+        previous: json["previous"].toString(),
         results: json["results"] == null
             ? []
             : List<Result>.from(
@@ -82,30 +82,30 @@ class Result {
 
   final String? slug;
   final String? name;
-  final int? playtime;
+  final String? playtime;
   final List<Platform>? platforms;
   final dynamic stores;
   final DateTime? released;
   final bool? tba;
   final String? backgroundImage;
-  final int? rating;
-  final int? ratingTop;
+  final String? rating;
+  final String? ratingTop;
   final List<Rating>? ratings;
-  final int? ratingsCount;
-  final int? reviewsTextCount;
-  final int? added;
+  final String? ratingsCount;
+  final String? reviewsTextCount;
+  final String? added;
   final AddedByStatus? addedByStatus;
   final dynamic metacritic;
-  final int? suggestionsCount;
+  final String? suggestionsCount;
   final DateTime? updated;
-  final int? id;
+  final String? id;
   final dynamic score;
   final dynamic clip;
   final List<dynamic>? tags;
   final dynamic esrbRating;
   final dynamic userGame;
-  final int? reviewsCount;
-  final int? communityRating;
+  final String? reviewsCount;
+  final String? communityRating;
   final String? saturatedColor;
   final String? dominantColor;
   final List<ShortScreenshot>? shortScreenshots;
@@ -113,46 +113,46 @@ class Result {
   final List<Genre>? genres;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        slug: json["slug"],
-        name: json["name"],
-        playtime: json["playtime"],
+        slug: json["slug"].toString(),
+        name: json["name"].toString(),
+        playtime: json["playtime"].toString(),
         platforms: json["platforms"] == null
             ? []
             : List<Platform>.from(
                 json["platforms"]!.map((x) => Platform.fromJson(x))),
-        stores: json["stores"],
+        stores: json["stores"].toString(),
         released:
             json["released"] == null ? null : DateTime.parse(json["released"]),
         tba: json["tba"],
-        backgroundImage: json["background_image"],
-        rating: json["rating"],
-        ratingTop: json["rating_top"],
+        backgroundImage: json["background_image"].toString(),
+        rating: json["rating"].toString(),
+        ratingTop: json["rating_top"].toString(),
         ratings: json["ratings"] == null
             ? []
             : List<Rating>.from(
                 json["ratings"]!.map((x) => Rating.fromJson(x))),
-        ratingsCount: json["ratings_count"],
-        reviewsTextCount: json["reviews_text_count"],
-        added: json["added"],
+        ratingsCount: json["ratings_count"].toString(),
+        reviewsTextCount: json["reviews_text_count"].toString(),
+        added: json["added"].toString(),
         addedByStatus: json["added_by_status"] == null
             ? null
             : AddedByStatus.fromJson(json["added_by_status"]),
-        metacritic: json["metacritic"],
-        suggestionsCount: json["suggestions_count"],
+        metacritic: json["metacritic"].toString(),
+        suggestionsCount: json["suggestions_count"].toString(),
         updated:
             json["updated"] == null ? null : DateTime.parse(json["updated"]),
-        id: json["id"],
-        score: json["score"],
-        clip: json["clip"],
+        id: json["id"].toString(),
+        score: json["score"].toString(),
+        clip: json["clip"].toString(),
         tags: json["tags"] == null
             ? []
             : List<dynamic>.from(json["tags"]!.map((x) => x)),
-        esrbRating: json["esrb_rating"],
-        userGame: json["user_game"],
-        reviewsCount: json["reviews_count"],
-        communityRating: json["community_rating"],
-        saturatedColor: json["saturated_color"],
-        dominantColor: json["dominant_color"],
+        esrbRating: json["esrb_rating"].toString(),
+        userGame: json["user_game"].toString(),
+        reviewsCount: json["reviews_count"].toString(),
+        communityRating: json["community_rating"].toString(),
+        saturatedColor: json["saturated_color"].toString(),
+        dominantColor: json["dominant_color"].toString(),
         shortScreenshots: json["short_screenshots"] == null
             ? []
             : List<ShortScreenshot>.from(json["short_screenshots"]!
@@ -219,14 +219,14 @@ class AddedByStatus {
     this.toplay,
   });
 
-  final int? yet;
-  final int? owned;
-  final int? toplay;
+  final String? yet;
+  final String? owned;
+  final String? toplay;
 
   factory AddedByStatus.fromJson(Map<String, dynamic> json) => AddedByStatus(
-        yet: json["yet"],
-        owned: json["owned"],
-        toplay: json["toplay"],
+        yet: json["yet"].toString(),
+        owned: json["owned"].toString(),
+        toplay: json["toplay"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -243,14 +243,14 @@ class Genre {
     this.slug,
   });
 
-  final int? id;
+  final String? id;
   final String? name;
   final String? slug;
 
   factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-        id: json["id"],
-        name: json["name"],
-        slug: json["slug"],
+        id: json["id"].toString(),
+        name: json["name"].toString(),
+        slug: json["slug"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -285,16 +285,16 @@ class Rating {
     this.percent,
   });
 
-  final int? id;
+  final String? id;
   final String? title;
-  final int? count;
-  final int? percent;
+  final String? count;
+  final String? percent;
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        id: json["id"],
-        title: json["title"],
-        count: json["count"],
-        percent: json["percent"],
+        id: json["id"].toString(),
+        title: json["title"].toString(),
+        count: json["count"].toString(),
+        percent: json["percent"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -311,13 +311,13 @@ class ShortScreenshot {
     this.image,
   });
 
-  final int? id;
+  final String? id;
   final String? image;
 
   factory ShortScreenshot.fromJson(Map<String, dynamic> json) =>
       ShortScreenshot(
-        id: json["id"],
-        image: json["image"],
+        id: json["id"].toString(),
+        image: json["image"].toString(),
       );
 
   Map<String, dynamic> toJson() => {

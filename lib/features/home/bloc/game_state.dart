@@ -6,7 +6,7 @@ abstract class GameState {}
 class GameLoadingState extends GameState {}
 
 class GetGameDataSuccess extends GameState {
-  final List<dynamic> data;
+  final GameModel.GameModel data;
   GetGameDataSuccess(this.data);
   List<Object?> get props => [data];
 }
