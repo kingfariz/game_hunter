@@ -24,7 +24,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         if (response.statusCode == 200) {
           emit(GetGameDataSuccess(jsonDecode(response.toString())['results']));
         } else {
-          systemLog("Failed to get data");
+          systemLog(
+              "Failed to get data with response code ${response.statusCode}");
         }
       } catch (e) {
         systemLog(e.toString());
