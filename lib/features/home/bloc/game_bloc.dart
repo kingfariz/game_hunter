@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:game_hunter/helpers/constants.dart';
-import 'package:game_hunter/models/game_model.dart' as GameModel;
+import 'package:game_hunter/models/game_model.dart' as game_model;
 import 'package:meta/meta.dart';
 
 import '../../../../helpers/functions/system_log.dart';
@@ -24,8 +24,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           page: event.page,
         );
         if (response.statusCode == 200) {
-          GameModel.GameModel gameModel =
-              GameModel.gameModelFromJson(response.toString());
+          game_model.GameModel gameModel =
+              game_model.gameModelFromJson(response.toString());
           emit(GetGameDataSuccess(gameModel));
         } else {
           systemLog(

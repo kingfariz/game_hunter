@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:game_hunter/helpers/functions/system_log.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../../helpers/functions/string_formatter.dart';
 import '../../../helpers/themes.dart';
+import 'package:game_hunter/models/game_model.dart' as game_model;
 
 class GameList extends StatelessWidget {
-  const GameList({super.key});
+  final List<game_model.Result>? gameModel;
+  final int index;
+  const GameList({
+    Key? key,
+    required this.gameModel,
+    required this.index,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +30,32 @@ class GameList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                'https://media.rawg.io/media/games/8f0/8f067578df893bcdd24177ac65998729.jpg',
-                height: 200,
-                width: double.maxFinite,
-                alignment: Alignment.topCenter,
-                fit: BoxFit.cover,
-              ),
+              (gameModel![index].backgroundImage != null &&
+                      gameModel![index].backgroundImage! != "null")
+                  ? Image.network(
+                      gameModel![index].backgroundImage!,
+                      height: 200,
+                      width: double.maxFinite,
+                      alignment: Alignment.topCenter,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Shimmer.fromColors(
+                            baseColor: softPrimaryColor,
+                            highlightColor: primaryColor,
+                            child: Container(
+                              height: 200,
+                              width: double.maxFinite,
+                              color: Colors.white,
+                            ));
+                      },
+                    )
+                  : Image.asset(
+                      'assets/images/image_placeholder.JPG',
+                      height: 200,
+                      width: double.maxFinite,
+                    ),
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Column(
@@ -49,9 +77,10 @@ class GameList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Text("Cities: Skylines", style: titleTextStyle),
+                    Text(gameModel![index].name!, style: titleTextStyle),
                     const SizedBox(height: 2),
-                    Text("Release Date: Feb 11, 2023",
+                    Text(
+                        "Release Date: ${StringFormatter().dateFormatter(gameModel![index].released!)}",
                         style: releaseDateTextStyle),
                     const SizedBox(height: 4),
                   ],

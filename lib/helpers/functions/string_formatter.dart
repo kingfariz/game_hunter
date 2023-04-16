@@ -7,4 +7,13 @@ class StringFormatter {
     formatter.maximumFractionDigits = 2;
     return formatter.format(v);
   }
+
+  String dateFormatter(DateTime s) {
+    try {
+      final formatter = DateFormat('MMMM dd, yyyy');
+      return formatter.format(s);
+    } catch (e) {
+      return "-";
+    }
+  }
 }

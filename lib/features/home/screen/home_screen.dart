@@ -89,17 +89,24 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
           builder: (context, state) {
-            if (state is GameLoadingState) {
+            if (state is GetGameDataSuccess) {
+              return ListView.builder(
+                  itemCount: state.data.results == null
+                      ? 0
+                      : state.data.results!.length,
+                  itemBuilder: ((context, index) {
+                    if (state.data.results == null) {
+                      return const Placeholder();
+                    } else {
+                      return GameList(
+                          gameModel: state.data.results, index: index);
+                    }
+                  }));
+            } else {
               return const SpinKitChasingDots(
                 size: 50,
                 color: softPrimaryColor,
               );
-            } else {
-              return ListView(children: [
-                GameList(),
-                GameList(),
-                GameList(),
-              ]);
             }
           },
         ),
