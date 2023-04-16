@@ -12,7 +12,7 @@ part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
-  GameBloc() : super(GameInitial()) {
+  GameBloc() : super(GameLoadingState()) {
     on<GetGameData>((event, emit) async {
       try {
         Response response = await getConnect(
