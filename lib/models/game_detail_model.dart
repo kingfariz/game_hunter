@@ -325,7 +325,6 @@ class Developer {
     this.gamesCount,
     this.imageBackground,
     this.domain,
-    this.language,
   });
 
   final String? id;
@@ -334,7 +333,6 @@ class Developer {
   final String? gamesCount;
   final String? imageBackground;
   final String? domain;
-  final Language? language;
 
   factory Developer.fromJson(Map<String, dynamic> json) => Developer(
         id: json["id"].toString(),
@@ -343,7 +341,6 @@ class Developer {
         gamesCount: json["games_count"].toString(),
         imageBackground: json["image_background"],
         domain: json["domain"],
-        language: languageValues.map[json["language"]]!,
       );
 
   Map<String, dynamic> toJson() => {
@@ -353,13 +350,8 @@ class Developer {
         "games_count": gamesCount,
         "image_background": imageBackground,
         "domain": domain,
-        "language": languageValues.reverse[language],
       };
 }
-
-enum Language { ENG }
-
-final languageValues = EnumValues({"eng": Language.ENG});
 
 class EsrbRating {
   EsrbRating({

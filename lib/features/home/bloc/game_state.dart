@@ -15,7 +15,7 @@ class GetGameDataSuccess extends GameState {
 }
 
 class GetDetailGameDataSuccess extends GameState {
-  final game_model.GameModel data;
+  final detail_game_model.DetailGameModel data;
 
   GetDetailGameDataSuccess(
     this.data,
