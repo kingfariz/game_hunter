@@ -8,6 +8,7 @@ PreferredSizeWidget homeAppBar({
   required Function() sortingMode,
   required bool isLoading,
   required bool isASC,
+  required String orderingText,
 }) {
   return AppBar(
     toolbarHeight: 60,
@@ -23,7 +24,7 @@ PreferredSizeWidget homeAppBar({
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 12, bottom: 12),
-                height: 35,
+                height: 40,
                 padding:
                     const EdgeInsets.only(top: 6, bottom: 6, right: 8, left: 8),
                 decoration: BoxDecoration(
@@ -52,21 +53,36 @@ PreferredSizeWidget homeAppBar({
           ),
         ),
         const SizedBox(width: 20),
-        ElevatedButton(
-          onPressed: sortingMode,
-          style: ElevatedButton.styleFrom(
-              backgroundColor: softPrimaryColor,
-              shape: const RoundedRectangleBorder(
+        Column(
+          children: [
+            GestureDetector(
+              onTap: sortingMode,
+              child: Container(
+                width: 60,
+                height: 35,
+                decoration: BoxDecoration(
+                  color: softPrimaryColor,
+                  border: Border.all(color: softPrimaryColor),
                   borderRadius: BorderRadius.zero,
-                  side: BorderSide(color: softPrimaryColor))),
-          child: Column(
-            children: [
-              Text('Sort By',
-                  style: releaseDateTextStyle.copyWith(fontSize: 8)),
-              const SizedBox(height: 2),
-              Text(isASC == false ? 'ASC' : 'DSC', style: releaseDateTextStyle),
-            ],
-          ),
+                ),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      orderingText,
+                      style: releaseDateTextStyle.copyWith(fontSize: 8),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      isASC == false ? 'ASC' : 'DSC',
+                      style: releaseDateTextStyle.copyWith(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     ),

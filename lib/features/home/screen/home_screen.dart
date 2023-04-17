@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: homeAppBar(
           isLoading: isloading,
           isASC: isASC,
+          orderingText: sortBy,
           sortingMode: () async {
             isASC = !isASC;
             getData(
