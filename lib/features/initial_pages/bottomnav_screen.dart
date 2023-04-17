@@ -5,6 +5,7 @@ import 'package:game_hunter/features/home/screen/home_screen.dart';
 import 'package:game_hunter/features/trending/bloc/trending_bloc.dart';
 import 'package:game_hunter/features/trending/screen/trending_screen.dart';
 import '../../helpers/themes.dart';
+import '../profile/screen/profile_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({Key? key}) : super(key: key);
@@ -34,10 +35,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           child: const TrendingScreen(),
         );
       case 2:
-        return BlocProvider(
-          create: (context) => GameBloc(),
-          child: const HomeScreen(),
-        );
+        return const ProfileScreen();
       default:
         return BlocProvider(
           create: (context) => GameBloc(),

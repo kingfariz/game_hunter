@@ -8,6 +8,7 @@ const Color whiteColor = Color(0xffffffff);
 const Color blueColor = Color(0xff2C96F1);
 const Color primaryTextColor = whiteColor;
 const Color greyColor = Color(0xFF515151);
+const Color softGreyColor = Color(0xFF463e57);
 const Color lightgreyColor = Color(0xff777777);
 
 //Margins
@@ -34,19 +35,3 @@ TextStyle scoreTextStyle = const TextStyle(
 
 TextStyle contentHeaderTextStyle = const TextStyle(
     color: primaryTextColor, fontSize: 12, fontWeight: FontWeight.w400);
-//unused yet
-TextStyle productTotalReview = const TextStyle(
-    color: softPrimaryColor, fontSize: 11, fontWeight: FontWeight.bold);
-
-TextStyle productTotalReviewLight =
-    const TextStyle(color: softPrimaryColor, fontSize: 11);
-
-TextStyle productName = const TextStyle(color: greyColor, fontSize: 12);
-
-TextStyle productPrice = const TextStyle(
-    color: primaryTextColor, fontSize: 13, fontWeight: FontWeight.bold);
-
-TextStyle productSale = const TextStyle(color: softPrimaryColor, fontSize: 11);
-
-TextStyle buttonTextStyle = const TextStyle(
-    color: primaryColor, fontSize: 18, fontWeight: FontWeight.w600);
