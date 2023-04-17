@@ -16,9 +16,11 @@ class GetGameDataSuccess extends GameState {
 
 class GetDetailGameDataSuccess extends GameState {
   final detail_game_model.DetailGameModel data;
+  final screenshots_model.ScreenShotsGameModel ssData;
 
   GetDetailGameDataSuccess(
     this.data,
+    this.ssData,
   );
-  List<Object?> get props => [data];
+  List<Object?> get props => [data, ssData];
 }

@@ -56,7 +56,9 @@ Widget gameDetailScreenShimmer(game_model.Result gameModel) {
             Text(gameModel.name!, style: titleTextStyle),
             const SizedBox(height: 8),
             Text(
-                "Release Date: ${StringFormatter().dateFormatter(gameModel.released!)}",
+                gameModel.released == null
+                    ? "Release Date: TBA"
+                    : "Release Date: ${StringFormatter().dateFormatter(gameModel.released!)}",
                 style: releaseDateTextStyle),
             const SizedBox(height: 4),
             Text(

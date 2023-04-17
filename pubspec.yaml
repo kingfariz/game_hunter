@@ -19,6 +19,7 @@ dependencies:
   intl: ^0.18.0
   meta: ^1.8.0
   bloc: ^8.1.1
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:

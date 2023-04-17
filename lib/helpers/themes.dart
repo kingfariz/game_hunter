@@ -29,6 +29,11 @@ TextStyle releaseDateTextStyle = const TextStyle(
 TextStyle appbarSearchTextStyle = const TextStyle(
     color: whiteColor, fontSize: 12, fontWeight: FontWeight.w300);
 
+// TextStyle releaseDateTextStyle = const TextStyle(
+//     color: primaryTextColor, fontSize: 12, fontWeight: FontWeight.w300);
+
+TextStyle contentHeaderTextStyle = const TextStyle(
+    color: primaryTextColor, fontSize: 12, fontWeight: FontWeight.w400);
 //unused yet
 TextStyle productTotalReview = const TextStyle(
     color: softPrimaryColor, fontSize: 11, fontWeight: FontWeight.bold);

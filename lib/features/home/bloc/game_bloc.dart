@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:game_hunter/helpers/constants.dart';
 import 'package:game_hunter/models/game_model.dart' as game_model;
 import 'package:game_hunter/models/game_detail_model.dart' as detail_game_model;
+import 'package:game_hunter/models/game_screenshots_model.dart'
+    as screenshots_model;
 import 'package:meta/meta.dart';
 
 import '../../../../helpers/functions/system_log.dart';
@@ -53,13 +55,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           endpoint: EndPoints.games,
           id: event.id,
         );
-        if (response.statusCode == 200) {
+        Response responseScreenshots = await getScreenShotsGameData(
+          endpoint: EndPoints.games,
+          id: event.id,
+        );
+        if (response.statusCode == 200 &&
+            responseScreenshots.statusCode == 200) {
           systemLog(response.data.toString());
           if (response.data["detail"] != "Not found") {
             detail_game_model.DetailGameModel detailGameModel =
                 detail_game_model.detailGameModelFromJson(response.toString());
 
-            emit(GetDetailGameDataSuccess(detailGameModel));
+            screenshots_model.ScreenShotsGameModel ssGameModel =
+                screenshots_model.screenShotsGameModelFromJson(
+                    responseScreenshots.toString());
+
+            emit(GetDetailGameDataSuccess(detailGameModel, ssGameModel));
           } else {
             emit(GetGameDataEmpty());
           }

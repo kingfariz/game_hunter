@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hunter/features/home/bloc/game_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:game_hunter/models/game_model.dart' as game_model;
 import 'package:shimmer/shimmer.dart';
 import '../../../helpers/functions/string_formatter.dart';
 import '../../../helpers/themes.dart';
+import '../widgets/screenshots_card.dart';
 import '../widgets/shimmer_game_detail.dart';
 
 class GameDetailScreen extends StatefulWidget {
@@ -16,6 +18,8 @@ class GameDetailScreen extends StatefulWidget {
 }
 
 class _GameDetailScreenState extends State<GameDetailScreen> {
+  // int _currentImageSlider = 0;
+
   @override
   Widget build(BuildContext context) {
     String platformAvailabilityList = widget.gameModel.platforms!
@@ -93,7 +97,9 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                             Text(widget.gameModel.name!, style: titleTextStyle),
                             const SizedBox(height: 8),
                             Text(
-                                "Release Date: ${StringFormatter().dateFormatter(widget.gameModel.released!)}",
+                                widget.gameModel.released == null
+                                    ? "Release Date: TBA"
+                                    : "Release Date: ${StringFormatter().dateFormatter(widget.gameModel.released!)}",
                                 style: releaseDateTextStyle),
                             const SizedBox(height: 4),
                             Text(
@@ -127,6 +133,29 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                             Text(
                                 "Tags : ${StringFormatter().stringNullFormatter(state.data.tags!.map((e) => e.name.toString()).join(', '))}",
                                 style: releaseDateTextStyle),
+                            const SizedBox(height: 22),
+                            Text("ScreenShots: ",
+                                style: contentHeaderTextStyle),
+                            const SizedBox(height: 8),
+                            CarouselSlider(
+                              items: state.ssData.results!
+                                  .where((e) => e.isDeleted == false)
+                                  .take(10)
+                                  .toList()
+                                  .reversed
+                                  .map((result) => ScreenShotsCard(
+                                        screenShots: result,
+                                      ))
+                                  .toList(),
+                              options: CarouselOptions(
+                                viewportFraction: 1.0,
+                                autoPlay: true,
+                                autoPlayInterval: const Duration(seconds: 3),
+                                autoPlayAnimationDuration:
+                                    const Duration(milliseconds: 300),
+                                enlargeCenterPage: false,
+                              ),
+                            ),
                           ],
                         ),
                       ),

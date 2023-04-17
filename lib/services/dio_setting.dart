@@ -57,6 +57,24 @@ Future<Response> getDetailGameData({
   }
 }
 
+Future<Response> getScreenShotsGameData({
+  required String id,
+  required String endpoint,
+}) async {
+  try {
+    systemLog({
+      'id': id,
+      "key": Params.apiKey,
+    }.toString());
+    return await dio.get("$endpoint/$id/screenshots", queryParameters: {
+      "key": Params.apiKey,
+    });
+  } on DioError catch (e) {
+    systemLog(e.toString());
+    rethrow;
+  }
+}
+
 // Future<Response> postConnect(url, data) async {
 //   try {
 //     dio.options.headers['content-Type'] = 'application/x-www-form-urlencoded';
