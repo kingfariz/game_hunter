@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:game_hunter/features/home/bloc/game_bloc.dart';
+import 'package:game_hunter/features/home/screen/game_detail_screen.dart';
 import 'package:game_hunter/features/home/widgets/game_list.dart';
 import 'package:game_hunter/features/home/widgets/home_appbar.dart';
 import 'package:game_hunter/helpers/functions/system_log.dart';
@@ -126,7 +127,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       return GameList(
                         gameModel: state.data.results,
                         index: index,
-                        function: () {},
+                        function: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GameDetailScreen(
+                                      state.data.results![index])));
+                        },
                       );
                     }
                   }));

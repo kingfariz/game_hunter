@@ -17,7 +17,7 @@ class StringFormatter {
     }
   }
 
-  String metaCriticFormatter(String s) {
+  String stringNullFormatter(String s) {
     try {
       if (s.contains("null")) {
         s = "-";

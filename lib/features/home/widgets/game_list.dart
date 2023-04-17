@@ -84,7 +84,7 @@ class GameList extends StatelessWidget {
                         style: releaseDateTextStyle),
                     const SizedBox(height: 2),
                     Text(
-                        "MetaCritic Score: ${StringFormatter().metaCriticFormatter(gameModel![index].metacritic.toString())}",
+                        "MetaCritic Score: ${StringFormatter().stringNullFormatter(gameModel![index].metacritic.toString())}",
                         style: releaseDateTextStyle),
                     const SizedBox(height: 4),
                   ],
