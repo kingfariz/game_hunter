@@ -15,3 +15,11 @@ class GetGameData extends GameEvent {
     required this.searchQuery,
   });
 }
+
+class GetDetailGameData extends GameEvent {
+  final String id;
+
+  GetDetailGameData({
+    required this.id,
+  });
+}

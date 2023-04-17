@@ -16,7 +16,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<GetGameData>((event, emit) async {
       try {
         emit(GameLoadingState());
-        Response response = await getConnect(
+        Response response = await getGameData(
           endpoint: EndPoints.games,
           ordering: event.ordering,
           platform: event.platform,
@@ -35,6 +35,33 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           } else {
             emit(GetGameDataEmpty());
           }
+        } else {
+          systemLog(
+              "Failed to get data with response code ${response.statusCode}");
+        }
+      } catch (e, stackTrace) {
+        systemLog(e.toString());
+        systemLog(stackTrace.toString());
+      }
+    });
+
+    on<GetDetailGameData>((event, emit) async {
+      try {
+        emit(GameLoadingState());
+        Response response = await getDetailGameData(
+          endpoint: EndPoints.games,
+          id: event.id,
+        );
+        if (response.statusCode == 200) {
+          systemLog(response.data.toString());
+          // if (response.data["count"] != 0) {
+          //   game_model.GameModel gameModel =
+          //       game_model.gameModelFromJson(response.toString());
+
+          //   emit(GetGameDataSuccess(gameModel, false));
+          // } else {
+          //   emit(GetGameDataEmpty());
+          // }
         } else {
           systemLog(
               "Failed to get data with response code ${response.statusCode}");

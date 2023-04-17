@@ -8,7 +8,7 @@ final Dio dio = Dio(BaseOptions(
     receiveTimeout: const Duration(seconds: 30),
     sendTimeout: const Duration(seconds: 30)));
 
-Future<Response> getConnect(
+Future<Response> getGameData(
     {required String endpoint,
     String page = "1",
     required String platform,
@@ -31,6 +31,25 @@ Future<Response> getConnect(
       "platforms": platform,
       "ordering": ordering,
       "search": searchQuery,
+    });
+  } on DioError catch (e) {
+    systemLog(e.toString());
+    rethrow;
+  }
+}
+
+Future<Response> getDetailGameData({
+  required String id,
+  required String endpoint,
+}) async {
+  try {
+    systemLog({
+      'id': id,
+      "key": Params.apiKey,
+    }.toString());
+    return await dio.get("$endpoint/$id", queryParameters: {
+      "id": id,
+      "key": Params.apiKey,
     });
   } on DioError catch (e) {
     systemLog(e.toString());

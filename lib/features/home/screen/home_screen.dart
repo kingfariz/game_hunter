@@ -131,8 +131,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => GameDetailScreen(
-                                      state.data.results![index])));
+                                  builder: (context) => BlocProvider(
+                                        create: (context) => GameBloc()
+                                          ..add(GetDetailGameData(
+                                              id: state
+                                                  .data.results![index].id!)),
+                                        child: GameDetailScreen(
+                                            state.data.results![index]),
+                                      )));
                         },
                       );
                     }

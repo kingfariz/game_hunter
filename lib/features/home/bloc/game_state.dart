@@ -13,3 +13,12 @@ class GetGameDataSuccess extends GameState {
   GetGameDataSuccess(this.data, this.statusNextPage);
   List<Object?> get props => [data, statusNextPage];
 }
+
+class GetDetailGameDataSuccess extends GameState {
+  final game_model.GameModel data;
+
+  GetDetailGameDataSuccess(
+    this.data,
+  );
+  List<Object?> get props => [data];
+}
