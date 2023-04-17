@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchCtrl = TextEditingController(text: '');
   bool isloading = false;
   bool isASC = false;
-  String sortBy = "metacritic";
+  String sortBy = "updated";
   int currentIndex = 1;
   bool dismissPagination = true;
 
