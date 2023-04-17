@@ -8,18 +8,18 @@ import 'package:game_hunter/models/game_model.dart' as game_model;
 class GameList extends StatelessWidget {
   final List<game_model.Result>? gameModel;
   final int index;
+  final Function() function;
   const GameList({
     Key? key,
     required this.gameModel,
     required this.index,
+    required this.function,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        systemLog("clicked");
-      },
+      onTap: function,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(

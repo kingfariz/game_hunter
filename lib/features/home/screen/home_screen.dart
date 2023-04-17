@@ -97,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             if (state is GetGameDataSuccess) {
               setState(() {
-                systemLog(state.statusNextPage.toString());
                 if (state.statusNextPage == false) {
                   dismissPagination = true;
                 } else {
@@ -125,7 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       return const Placeholder();
                     } else {
                       return GameList(
-                          gameModel: state.data.results, index: index);
+                        gameModel: state.data.results,
+                        index: index,
+                        function: () {},
+                      );
                     }
                   }));
             } else {
