@@ -19,14 +19,14 @@ class TrendingBloc extends Bloc<TrendingEvent, TrendingState> {
     on<GetGameData>((event, emit) async {
       try {
         emit(GameLoadingState());
-        Response response = await getGameData(
+        Response response = await getTrendingGameData(
           endpoint: EndPoints.games,
           ordering: event.ordering,
-          platform: event.platform,
           page: event.page,
           searchQuery: event.searchQuery,
         );
         if (response.statusCode == 200) {
+          systemLog(response.toString());
           if (response.data["count"] != 0) {
             game_model.GameModel gameModel =
                 game_model.gameModelFromJson(response.toString());

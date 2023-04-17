@@ -16,12 +16,9 @@ class TrendingScreen extends StatefulWidget {
 }
 
 class _TrendingScreenState extends State<TrendingScreen> {
-  TextEditingController searchCtrl = TextEditingController(text: '');
   bool isloading = false;
-  bool isASC = false;
-  String sortBy = "metacritic";
+  String sortBy = " -updated,-metacritic";
   int currentIndex = 1;
-  bool dismissPagination = true;
 
   @override
   void initState() {
@@ -39,17 +36,11 @@ class _TrendingScreenState extends State<TrendingScreen> {
           listener: (context, state) {
             if (state is GetGameDataEmpty) {
               setState(() {
-                dismissPagination = true;
                 isloading = false;
               });
             }
             if (state is GetGameDataSuccess) {
               setState(() {
-                if (state.statusNextPage == false) {
-                  dismissPagination = true;
-                } else {
-                  dismissPagination = false;
-                }
                 isloading = false;
               });
             }
@@ -104,66 +95,43 @@ class _TrendingScreenState extends State<TrendingScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if (dismissPagination == false) ...[
-            if (currentIndex > 1) ...[
-              FloatingActionButton(
-                onPressed: () {
-                  if (currentIndex > 1) {
-                    currentIndex--;
-                  }
-                  getData(
-                      page: currentIndex.toString(),
-                      searchQuery: searchCtrl.text.toString().trim(),
-                      ordering: sortBy);
-                },
-                backgroundColor: softPrimaryColor,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4.0))),
-                child: const Icon(Icons.arrow_back),
-              ),
-              const SizedBox(width: 20),
-            ],
+          if (currentIndex > 1) ...[
             FloatingActionButton(
               onPressed: () {
-                currentIndex++;
-                getData(
-                    page: currentIndex.toString(),
-                    searchQuery: searchCtrl.text.toString().trim(),
-                    ordering: sortBy);
+                if (currentIndex > 1) {
+                  currentIndex--;
+                }
+                getData(page: currentIndex.toString(), ordering: sortBy);
               },
               backgroundColor: softPrimaryColor,
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4.0))),
-              child: const Icon(Icons.arrow_forward),
+              child: const Icon(Icons.arrow_back),
             ),
+            const SizedBox(width: 20),
           ],
+          FloatingActionButton(
+            onPressed: () {
+              currentIndex++;
+              getData(page: currentIndex.toString(), ordering: sortBy);
+            },
+            backgroundColor: softPrimaryColor,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0))),
+            child: const Icon(Icons.arrow_forward),
+          ),
         ],
       ),
     );
   }
 
-  void appbarAction(String value) {
-    sortBy = value;
-    getData(
-        page: "1",
-        searchQuery: searchCtrl.text.toString().trim(),
-        ordering: value);
-  }
-
   void getData({
     required String page,
-    String platform = "187",
     required String ordering,
     String searchQuery = "",
   }) async {
-    if (isASC == false) {
-      ordering = "-$ordering";
-    }
     final TrendingBloc crudBloc = BlocProvider.of<TrendingBloc>(context);
-    crudBloc.add(GetGameData(
-        page: page,
-        ordering: ordering,
-        platform: platform,
-        searchQuery: searchQuery));
+    crudBloc.add(
+        GetGameData(page: page, ordering: ordering, searchQuery: searchQuery));
   }
 }

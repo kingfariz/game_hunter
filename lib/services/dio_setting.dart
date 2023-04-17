@@ -38,6 +38,33 @@ Future<Response> getGameData(
   }
 }
 
+Future<Response> getTrendingGameData(
+    {required String endpoint,
+    String page = "1",
+    String pageSize = "20",
+    required String ordering,
+    required String searchQuery}) async {
+  try {
+    systemLog({
+      'page': page,
+      "key": Params.apiKey,
+      "page_size": pageSize,
+      "ordering": ordering,
+      "search": searchQuery,
+    }.toString());
+    return await dio.get(endpoint, queryParameters: {
+      'page': page,
+      "key": Params.apiKey,
+      "page_size": pageSize,
+      "ordering": ordering,
+      "search": searchQuery,
+    });
+  } on DioError catch (e) {
+    systemLog(e.toString());
+    rethrow;
+  }
+}
+
 Future<Response> getDetailGameData({
   required String id,
   required String endpoint,

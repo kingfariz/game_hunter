@@ -5,12 +5,10 @@ abstract class TrendingEvent {}
 
 class GetGameData extends TrendingEvent {
   final String page;
-  final String platform;
   final String ordering;
   final String searchQuery;
   GetGameData({
     required this.page,
-    required this.platform,
     required this.ordering,
     required this.searchQuery,
   });
