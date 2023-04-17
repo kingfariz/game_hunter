@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchCtrl = TextEditingController(text: '');
   bool isloading = false;
+  bool isASC = false;
   String sortBy = "";
 
   @override
@@ -34,6 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primaryColor,
       appBar: homeAppBar(
           isLoading: isloading,
+          isASC: isASC,
+          sortingMode: () async {
+            isASC = !isASC;
+            getData(
+                page: "1",
+                searchQuery: searchCtrl.text.toString().trim(),
+                ordering: sortBy);
+          },
           actionWidget: [
             PopupMenuButton<String>(
               onSelected: appbarAction,
@@ -122,6 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
     String ordering = "-released",
     String searchQuery = "",
   }) async {
+    if (isASC == false) {
+      ordering = "-$ordering";
+    }
     final GameBloc crudBloc = BlocProvider.of<GameBloc>(context);
     crudBloc.add(GetGameData(
         page: page,

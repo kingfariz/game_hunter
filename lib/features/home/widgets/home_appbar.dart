@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../../helpers/themes.dart';
 
-PreferredSizeWidget homeAppBar(
-    {required Widget searchWidget,
-    required List<Widget> actionWidget,
-    required Function() function,
-    required bool isLoading}) {
+PreferredSizeWidget homeAppBar({
+  required Widget searchWidget,
+  required List<Widget> actionWidget,
+  required Function() function,
+  required Function() sortingMode,
+  required bool isLoading,
+  required bool isASC,
+}) {
   return AppBar(
     toolbarHeight: 60,
     backgroundColor: darkPrimaryColor,
@@ -45,6 +48,23 @@ PreferredSizeWidget homeAppBar(
                   ],
                 ),
               )
+            ],
+          ),
+        ),
+        const SizedBox(width: 20),
+        ElevatedButton(
+          onPressed: sortingMode,
+          style: ElevatedButton.styleFrom(
+              backgroundColor: softPrimaryColor,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                  side: BorderSide(color: softPrimaryColor))),
+          child: Column(
+            children: [
+              Text('Sort By',
+                  style: releaseDateTextStyle.copyWith(fontSize: 8)),
+              const SizedBox(height: 2),
+              Text(isASC == false ? 'ASC' : 'DSC', style: releaseDateTextStyle),
             ],
           ),
         ),
