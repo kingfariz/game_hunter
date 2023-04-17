@@ -75,7 +75,7 @@ PreferredSizeWidget homeAppBar({
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      isASC == false ? 'ASC' : 'DSC',
+                      isASC == false ? 'DSC' : 'ASC',
                       style: releaseDateTextStyle.copyWith(fontSize: 12),
                     ),
                   ],

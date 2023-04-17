@@ -22,14 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchCtrl = TextEditingController(text: '');
   bool isloading = false;
   bool isASC = false;
-  String sortBy = "released";
+  String sortBy = "metacritic";
   int currentIndex = 1;
   bool dismissPagination = true;
 
   @override
   void initState() {
     super.initState();
-    getData(page: currentIndex.toString());
+    getData(page: currentIndex.toString(), ordering: sortBy);
   }
 
   @override
@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void getData({
     required String page,
     String platform = "187",
-    String ordering = "released",
+    required String ordering,
     String searchQuery = "",
   }) async {
     if (isASC == false) {
