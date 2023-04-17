@@ -41,7 +41,7 @@ Future<Response> getGameData(
 Future<Response> getTrendingGameData(
     {required String endpoint,
     String page = "1",
-    String pageSize = "20",
+    String pageSize = "5",
     required String ordering,
     required String searchQuery}) async {
   try {

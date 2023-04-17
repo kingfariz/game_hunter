@@ -6,6 +6,7 @@ import 'package:game_hunter/features/home/screen/game_detail_screen.dart';
 import 'package:game_hunter/features/trending/widgets/game_list.dart';
 import 'package:game_hunter/features/trending/bloc/trending_bloc.dart';
 import 'package:game_hunter/helpers/themes.dart';
+import 'package:game_hunter/models/game_model.dart';
 import '../widgets/home_appbar.dart';
 
 class TrendingScreen extends StatefulWidget {
@@ -16,14 +17,31 @@ class TrendingScreen extends StatefulWidget {
 }
 
 class _TrendingScreenState extends State<TrendingScreen> {
-  bool isloading = false;
-  String sortBy = " -updated,-metacritic";
-  int currentIndex = 1;
+  bool _isloading = false;
+  final String _sortBy = " -updated,-metacritic";
+  int _currentIndex = 1;
+  List<Result> _trendList = [];
 
   @override
   void initState() {
     super.initState();
-    getData(page: currentIndex.toString(), ordering: sortBy);
+
+    getData(page: _currentIndex.toString(), ordering: _sortBy);
+  }
+
+  void getData({
+    required String page,
+    required String ordering,
+    String searchQuery = "",
+  }) async {
+    final TrendingBloc crudBloc = BlocProvider.of<TrendingBloc>(context);
+    crudBloc.add(
+        GetGameData(page: page, ordering: ordering, searchQuery: searchQuery));
+  }
+
+  _loadMore() async {
+    _isloading = true;
+    getData(page: (_currentIndex).toString(), ordering: _sortBy);
   }
 
   @override
@@ -36,102 +54,74 @@ class _TrendingScreenState extends State<TrendingScreen> {
           listener: (context, state) {
             if (state is GetGameDataEmpty) {
               setState(() {
-                isloading = false;
+                _isloading = false;
               });
             }
             if (state is GetGameDataSuccess) {
               setState(() {
-                isloading = false;
+                _isloading = false;
+                _currentIndex++;
+                if (state.data.results == null) {
+                  _trendList = [];
+                } else {
+                  _trendList.addAll(state.data.results!);
+                }
               });
             }
             if (state is GameLoadingState) {
               setState(() {
-                isloading = true;
+                _isloading = true;
               });
             }
           },
           builder: (context, state) {
             if (state is GetGameDataEmpty) {
               return const SizedBox();
-            } else if (state is GetGameDataSuccess) {
-              return ListView.builder(
-                  itemCount: state.data.results == null
-                      ? 0
-                      : state.data.results!.length,
-                  itemBuilder: ((context, index) {
-                    if (state.data.results == null) {
-                      return const Placeholder();
-                    } else {
-                      return GameList(
-                        gameModel: state.data.results,
-                        index: index,
-                        function: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BlocProvider(
-                                        create: (context) =>
-                                            game_bloc.GameBloc()
-                                              ..add(game_bloc.GetDetailGameData(
-                                                  id: state.data.results![index]
-                                                      .id!)),
-                                        child: GameDetailScreen(
-                                            state.data.results![index]),
-                                      )));
-                        },
-                      );
-                    }
-                  }));
-            } else {
+            } else if (state is GetGameDataSuccess && _trendList == []) {
               return const SpinKitChasingDots(
                 size: 50,
                 color: softPrimaryColor,
               );
+            } else {
+              return ListView.builder(
+                  itemCount: _trendList.length,
+                  itemBuilder: ((context, index) {
+                    if (index >= _trendList.length - 1) {
+                      if (!_isloading) {
+                        _loadMore();
+                      }
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                        child: Center(
+                          child: SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      );
+                    }
+                    return GameList(
+                      gameModel: _trendList,
+                      index: index,
+                      function: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                      create: (context) => game_bloc.GameBloc()
+                                        ..add(game_bloc.GetDetailGameData(
+                                            id: _trendList[index].id!)),
+                                      child:
+                                          GameDetailScreen(_trendList[index]),
+                                    )));
+                      },
+                    );
+                  }));
             }
           },
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (currentIndex > 1) ...[
-            FloatingActionButton(
-              onPressed: () {
-                if (currentIndex > 1) {
-                  currentIndex--;
-                }
-                getData(page: currentIndex.toString(), ordering: sortBy);
-              },
-              backgroundColor: softPrimaryColor,
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
-              child: const Icon(Icons.arrow_back),
-            ),
-            const SizedBox(width: 20),
-          ],
-          FloatingActionButton(
-            onPressed: () {
-              currentIndex++;
-              getData(page: currentIndex.toString(), ordering: sortBy);
-            },
-            backgroundColor: softPrimaryColor,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4.0))),
-            child: const Icon(Icons.arrow_forward),
-          ),
-        ],
-      ),
     );
-  }
-
-  void getData({
-    required String page,
-    required String ordering,
-    String searchQuery = "",
-  }) async {
-    final TrendingBloc crudBloc = BlocProvider.of<TrendingBloc>(context);
-    crudBloc.add(
-        GetGameData(page: page, ordering: ordering, searchQuery: searchQuery));
   }
 }
