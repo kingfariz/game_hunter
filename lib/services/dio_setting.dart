@@ -16,6 +16,14 @@ Future<Response> getConnect(
     required String ordering,
     required String searchQuery}) async {
   try {
+    systemLog({
+      'page': page,
+      "key": Params.apiKey,
+      "page_size": pageSize,
+      "platforms": platform,
+      "ordering": ordering,
+      "search": searchQuery,
+    }.toString());
     return await dio.get(endpoint, queryParameters: {
       'page': page,
       "key": Params.apiKey,
