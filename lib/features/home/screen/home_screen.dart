@@ -22,11 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isloading = false;
   bool isASC = false;
   String sortBy = "";
-
+  int currentIndex = 1;
   @override
   void initState() {
     super.initState();
-    getData(page: "1");
+    getData(page: currentIndex.toString());
   }
 
   @override
@@ -75,13 +75,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           function: () {
-            getData(page: "1", searchQuery: searchCtrl.text.toString().trim());
+            getData(
+                page: "1",
+                searchQuery: searchCtrl.text.toString().trim(),
+                ordering: sortBy);
           }),
       body: SafeArea(
         child: BlocConsumer<GameBloc, GameState>(
           listener: (context, state) {
             if (state is GetGameDataSuccess) {
-              systemLog(state.data.toString());
               setState(() {
                 isloading = false;
               });
@@ -114,6 +116,43 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (currentIndex > 1) ...[
+            FloatingActionButton(
+              onPressed: () {
+                if (currentIndex > 1) {
+                  currentIndex--;
+                }
+                getData(
+                    page: currentIndex.toString(),
+                    searchQuery: searchCtrl.text.toString().trim(),
+                    ordering: sortBy);
+              },
+              backgroundColor: softPrimaryColor,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
+              child: const Icon(Icons.arrow_back),
+            ),
+            const SizedBox(width: 20),
+          ],
+          FloatingActionButton(
+            onPressed: () {
+              currentIndex++;
+              getData(
+                  page: currentIndex.toString(),
+                  searchQuery: searchCtrl.text.toString().trim(),
+                  ordering: sortBy);
+            },
+            backgroundColor: softPrimaryColor,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0))),
+            child: const Icon(Icons.arrow_forward),
+          ),
+        ],
       ),
     );
   }
