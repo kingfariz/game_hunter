@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hunter/features/home/bloc/game_bloc.dart';
 import 'package:game_hunter/features/home/screen/home_screen.dart';
+import 'package:game_hunter/features/trending/bloc/trending_bloc.dart';
+import 'package:game_hunter/features/trending/screen/trending_screen.dart';
 import '../../helpers/themes.dart';
 
 class BottomNavScreen extends StatefulWidget {
@@ -28,8 +30,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         );
       case 1:
         return BlocProvider(
-          create: (context) => GameBloc(),
-          child: const HomeScreen(),
+          create: (context) => TrendingBloc(),
+          child: const TrendingScreen(),
         );
       case 2:
         return BlocProvider(
@@ -50,6 +52,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         unselectedItemColor: lightgreyColor,
         selectedItemColor: blueColor,
         currentIndex: currentIndex,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         onTap: (value) {
           setState(() {
             currentIndex = value;
@@ -67,9 +71,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           BottomNavigationBarItem(
             icon: Container(
               margin: const EdgeInsets.only(top: 4, bottom: 4),
-              child: const Icon(Icons.search),
+              child: const Icon(Icons.trending_up_outlined),
             ),
-            label: 'Search',
+            label: 'High Rated Games',
           ),
           BottomNavigationBarItem(
             icon: Container(

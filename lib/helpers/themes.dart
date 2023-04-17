@@ -29,8 +29,8 @@ TextStyle releaseDateTextStyle = const TextStyle(
 TextStyle appbarSearchTextStyle = const TextStyle(
     color: whiteColor, fontSize: 12, fontWeight: FontWeight.w300);
 
-// TextStyle releaseDateTextStyle = const TextStyle(
-//     color: primaryTextColor, fontSize: 12, fontWeight: FontWeight.w300);
+TextStyle scoreTextStyle = const TextStyle(
+    color: whiteColor, fontSize: 14, fontWeight: FontWeight.w400);
 
 TextStyle contentHeaderTextStyle = const TextStyle(
     color: primaryTextColor, fontSize: 12, fontWeight: FontWeight.w400);

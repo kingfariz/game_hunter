@@ -33,32 +33,51 @@ class GameList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              (gameModel![index].backgroundImage != null &&
-                      gameModel![index].backgroundImage! != "null")
-                  ? Image.network(
-                      gameModel![index].backgroundImage!,
-                      height: 200,
-                      width: double.maxFinite,
-                      alignment: Alignment.topCenter,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Shimmer.fromColors(
-                            baseColor: softPrimaryColor,
-                            highlightColor: primaryColor,
-                            child: Container(
-                              height: 200,
-                              width: double.maxFinite,
-                              color: Colors.white,
-                            ));
-                      },
-                    )
-                  : Image.asset(
-                      'assets/images/image_placeholder.JPG',
-                      height: 200,
-                      width: double.maxFinite,
+              Stack(
+                children: [
+                  (gameModel![index].backgroundImage != null &&
+                          gameModel![index].backgroundImage! != "null")
+                      ? Image.network(
+                          gameModel![index].backgroundImage!,
+                          height: 200,
+                          width: double.maxFinite,
+                          alignment: Alignment.topCenter,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Shimmer.fromColors(
+                                baseColor: softPrimaryColor,
+                                highlightColor: primaryColor,
+                                child: Container(
+                                  height: 200,
+                                  width: double.maxFinite,
+                                  color: Colors.white,
+                                ));
+                          },
+                        )
+                      : Image.asset(
+                          'assets/images/image_placeholder.JPG',
+                          height: 200,
+                          width: double.maxFinite,
+                        ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text("MetaCritic", style: scoreTextStyle),
+                        Text(
+                            StringFormatter().stringNullFormatter(
+                                gameModel![index].metacritic.toString()),
+                            style: scoreTextStyle.copyWith(
+                                color: Colors.amber, fontSize: 20)),
+                      ],
                     ),
+                  ),
+                ],
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Column(
@@ -96,10 +115,6 @@ class GameList extends StatelessWidget {
                             : "Release Date: ${StringFormatter().dateFormatter(gameModel![index].released!)}",
                         style: releaseDateTextStyle),
                     const SizedBox(height: 2),
-                    Text(
-                        "MetaCritic Score: ${StringFormatter().stringNullFormatter(gameModel![index].metacritic.toString())}",
-                        style: releaseDateTextStyle),
-                    const SizedBox(height: 4),
                   ],
                 ),
               ),

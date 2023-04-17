@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:game_hunter/features/home/bloc/game_bloc.dart';
+import 'package:game_hunter/features/home/bloc/game_bloc.dart' as game_bloc;
 import 'package:game_hunter/features/home/screen/game_detail_screen.dart';
-import 'package:game_hunter/features/home/widgets/game_list.dart';
-import 'package:game_hunter/features/home/widgets/home_appbar.dart';
+import 'package:game_hunter/features/trending/widgets/game_list.dart';
+import 'package:game_hunter/features/trending/bloc/trending_bloc.dart';
 import 'package:game_hunter/helpers/themes.dart';
+import '../widgets/home_appbar.dart';
 
-import '../../../helpers/constants.dart';
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class TrendingScreen extends StatefulWidget {
+  const TrendingScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TrendingScreen> createState() => _TrendingScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TrendingScreenState extends State<TrendingScreen> {
   TextEditingController searchCtrl = TextEditingController(text: '');
   bool isloading = false;
   bool isASC = false;
@@ -35,59 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      appBar: homeAppBar(
-          isLoading: isloading,
-          isASC: isASC,
-          orderingText: sortBy,
-          sortingMode: () async {
-            isASC = !isASC;
-            getData(
-                page: "1",
-                searchQuery: searchCtrl.text.toString().trim(),
-                ordering: sortBy);
-          },
-          actionWidget: [
-            PopupMenuButton<String>(
-              onSelected: appbarAction,
-              itemBuilder: (BuildContext context) {
-                return {
-                  Params.orderingName,
-                  Params.orderingReleased,
-                  Params.orderingAdded,
-                  Params.orderingCreated,
-                  Params.orderingUpdated,
-                  Params.orderingRating,
-                  Params.orderingMetacritic,
-                }.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              },
-            ),
-          ],
-          searchWidget: Expanded(
-            child: TextFormField(
-              style: appbarSearchTextStyle,
-              controller: searchCtrl,
-              keyboardType: TextInputType.text,
-              inputFormatters: [LengthLimitingTextInputFormatter(30)],
-              decoration: InputDecoration.collapsed(
-                  hintText: 'Cari', hintStyle: appbarSearchTextStyle),
-            ),
-          ),
-          function: () async {
-            setState(() {
-              currentIndex = 1;
-            });
-            getData(
-                page: "1",
-                searchQuery: searchCtrl.text.toString().trim(),
-                ordering: sortBy);
-          }),
+      appBar: trendingAppBar(),
       body: SafeArea(
-        child: BlocConsumer<GameBloc, GameState>(
+        child: BlocConsumer<TrendingBloc, TrendingState>(
           listener: (context, state) {
             if (state is GetGameDataEmpty) {
               setState(() {
@@ -131,10 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => BlocProvider(
-                                        create: (context) => GameBloc()
-                                          ..add(GetDetailGameData(
-                                              id: state
-                                                  .data.results![index].id!)),
+                                        create: (context) =>
+                                            game_bloc.GameBloc()
+                                              ..add(game_bloc.GetDetailGameData(
+                                                  id: state.data.results![index]
+                                                      .id!)),
                                         child: GameDetailScreen(
                                             state.data.results![index]),
                                       )));
@@ -210,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isASC == false) {
       ordering = "-$ordering";
     }
-    final GameBloc crudBloc = BlocProvider.of<GameBloc>(context);
+    final TrendingBloc crudBloc = BlocProvider.of<TrendingBloc>(context);
     crudBloc.add(GetGameData(
         page: page,
         ordering: ordering,
