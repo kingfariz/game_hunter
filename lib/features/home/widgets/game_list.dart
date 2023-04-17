@@ -82,6 +82,10 @@ class GameList extends StatelessWidget {
                     Text(
                         "Release Date: ${StringFormatter().dateFormatter(gameModel![index].released!)}",
                         style: releaseDateTextStyle),
+                    const SizedBox(height: 2),
+                    Text(
+                        "MetaCritic Score: ${StringFormatter().metaCriticFormatter(gameModel![index].metacritic.toString())}",
+                        style: releaseDateTextStyle),
                     const SizedBox(height: 4),
                   ],
                 ),

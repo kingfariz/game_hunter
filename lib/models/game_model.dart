@@ -95,7 +95,7 @@ class Result {
   final String? reviewsTextCount;
   final String? added;
   final AddedByStatus? addedByStatus;
-  final dynamic metacritic;
+  final String? metacritic;
   final String? suggestionsCount;
   final DateTime? updated;
   final String? id;

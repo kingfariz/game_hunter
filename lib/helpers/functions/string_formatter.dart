@@ -16,4 +16,15 @@ class StringFormatter {
       return "-";
     }
   }
+
+  String metaCriticFormatter(String s) {
+    try {
+      if (s.contains("null")) {
+        s = "-";
+      }
+      return s;
+    } catch (e) {
+      return "-";
+    }
+  }
 }
