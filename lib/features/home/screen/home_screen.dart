@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchCtrl = TextEditingController(text: '');
   bool isloading = false;
   bool isASC = false;
-  String sortBy = "";
+  String sortBy = "released";
   int currentIndex = 1;
   bool dismissPagination = true;
 
@@ -179,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void appbarAction(String value) {
+    sortBy = value;
     getData(
         page: "1",
         searchQuery: searchCtrl.text.toString().trim(),
@@ -188,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void getData({
     required String page,
     String platform = "187",
-    String ordering = "-released",
+    String ordering = "released",
     String searchQuery = "",
   }) async {
     if (isASC == false) {
