@@ -8,6 +8,8 @@ import 'package:game_hunter/features/home/widgets/home_appbar.dart';
 import 'package:game_hunter/helpers/functions/system_log.dart';
 import 'package:game_hunter/helpers/themes.dart';
 
+import '../../../helpers/constants.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchCtrl = TextEditingController(text: '');
   bool isloading = false;
+  String sortBy = "";
+
   @override
   void initState() {
     super.initState();
@@ -30,7 +34,28 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primaryColor,
       appBar: homeAppBar(
           isLoading: isloading,
-          widget: Expanded(
+          actionWidget: [
+            PopupMenuButton<String>(
+              onSelected: appbarAction,
+              itemBuilder: (BuildContext context) {
+                return {
+                  Params.orderingName,
+                  Params.orderingReleased,
+                  Params.orderingAdded,
+                  Params.orderingCreated,
+                  Params.orderingUpdated,
+                  Params.orderingRating,
+                  Params.orderingMetacritic,
+                }.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+            ),
+          ],
+          searchWidget: Expanded(
             child: TextFormField(
               style: appbarSearchTextStyle,
               controller: searchCtrl,
@@ -41,8 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           function: () {
-            String searchQuery = searchCtrl.text.toString().trim();
-            getData(page: "1", searchQuery: searchQuery);
+            getData(page: "1", searchQuery: searchCtrl.text.toString().trim());
           }),
       body: SafeArea(
         child: BlocConsumer<GameBloc, GameState>(
@@ -85,11 +109,19 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void getData(
-      {required String page,
-      String platform = "187",
-      String ordering = "-released",
-      String searchQuery = ""}) async {
+  void appbarAction(String value) {
+    getData(
+        page: "1",
+        searchQuery: searchCtrl.text.toString().trim(),
+        ordering: value);
+  }
+
+  void getData({
+    required String page,
+    String platform = "187",
+    String ordering = "-released",
+    String searchQuery = "",
+  }) async {
     final GameBloc crudBloc = BlocProvider.of<GameBloc>(context);
     crudBloc.add(GetGameData(
         page: page,

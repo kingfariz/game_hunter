@@ -30,14 +30,15 @@ Future<Response> getConnect(
   }
 }
 
-Future<Response> postConnect(url, data) async {
-  try {
-    dio.options.headers['content-Type'] = 'application/x-www-form-urlencoded';
-    dio.options.connectTimeout = const Duration(seconds: 30);
-    dio.options.receiveTimeout = const Duration(seconds: 30);
-    return await dio.post(url, data: data);
-  } on DioError catch (e) {
-    systemLog(e.toString());
-    rethrow;
-  }
-}
+// Future<Response> postConnect(url, data) async {
+//   try {
+//     dio.options.headers['content-Type'] = 'application/x-www-form-urlencoded';
+//     dio.options.connectTimeout = const Duration(seconds: 30);
+//     dio.options.receiveTimeout = const Duration(seconds: 30);
+//     return await dio.post(url, data: data);
+//   } on DioError catch (e) {
+//     systemLog(e.toString());
+//     rethrow;
+//   }
+// }
+ 

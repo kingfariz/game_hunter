@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../helpers/themes.dart';
 
 PreferredSizeWidget homeAppBar(
-    {required Widget widget,
+    {required Widget searchWidget,
+    required List<Widget> actionWidget,
     required Function() function,
     required bool isLoading}) {
   return AppBar(
@@ -10,6 +11,7 @@ PreferredSizeWidget homeAppBar(
     backgroundColor: darkPrimaryColor,
     elevation: 0,
     automaticallyImplyLeading: false,
+    actions: actionWidget,
     title: Row(
       children: [
         Expanded(
@@ -26,7 +28,7 @@ PreferredSizeWidget homeAppBar(
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(
                   children: [
-                    widget,
+                    searchWidget,
                     GestureDetector(
                       onTap: () {
                         if (isLoading == false) {
