@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:game_hunter/features/home/bloc/game_bloc.dart';
 import 'package:game_hunter/features/home/widgets/game_list.dart';
+import 'package:game_hunter/features/home/widgets/home_appbar.dart';
 import 'package:game_hunter/helpers/functions/system_log.dart';
 import 'package:game_hunter/helpers/themes.dart';
 
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchCtrl = TextEditingController(text: '');
-
+  bool isloading = false;
   @override
   void initState() {
     super.initState();
@@ -27,65 +28,35 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      appBar: AppBar(
-        toolbarHeight: 60,
-        backgroundColor: darkPrimaryColor,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 12, bottom: 12),
-                    height: 35,
-                    padding: const EdgeInsets.only(
-                        top: 6, bottom: 6, right: 8, left: 8),
-                    decoration: BoxDecoration(
-                        color: softPrimaryColor,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            style: appbarSearchTextStyle,
-                            controller: searchCtrl,
-                            keyboardType: TextInputType.text,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(30)
-                            ],
-                            decoration: InputDecoration.collapsed(
-                                hintText: 'Cari',
-                                hintStyle: appbarSearchTextStyle),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            systemLog("clicked");
-                          },
-                          child: const Icon(
-                            Icons.search_outlined,
-                            size: 17,
-                            color: whiteColor,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+      appBar: homeAppBar(
+          isLoading: isloading,
+          widget: Expanded(
+            child: TextFormField(
+              style: appbarSearchTextStyle,
+              controller: searchCtrl,
+              keyboardType: TextInputType.text,
+              inputFormatters: [LengthLimitingTextInputFormatter(30)],
+              decoration: InputDecoration.collapsed(
+                  hintText: 'Cari', hintStyle: appbarSearchTextStyle),
             ),
-          ],
-        ),
-      ),
+          ),
+          function: () {
+            String searchQuery = searchCtrl.text.toString().trim();
+            getData(page: "1", searchQuery: searchQuery);
+          }),
       body: SafeArea(
         child: BlocConsumer<GameBloc, GameState>(
           listener: (context, state) {
             if (state is GetGameDataSuccess) {
               systemLog(state.data.toString());
+              setState(() {
+                isloading = false;
+              });
+            }
+            if (state is GameLoadingState) {
+              setState(() {
+                isloading = true;
+              });
             }
           },
           builder: (context, state) {
@@ -117,9 +88,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void getData(
       {required String page,
       String platform = "187",
-      String ordering = "-released"}) async {
+      String ordering = "-released",
+      String searchQuery = ""}) async {
     final GameBloc crudBloc = BlocProvider.of<GameBloc>(context);
-    crudBloc
-        .add(GetGameData(page: page, ordering: ordering, platform: platform));
+    crudBloc.add(GetGameData(
+        page: page,
+        ordering: ordering,
+        platform: platform,
+        searchQuery: searchQuery));
   }
 }

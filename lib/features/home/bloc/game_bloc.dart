@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -17,11 +15,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc() : super(GameLoadingState()) {
     on<GetGameData>((event, emit) async {
       try {
+        emit(GameLoadingState());
         Response response = await getConnect(
           endpoint: EndPoints.games,
           ordering: event.ordering,
           platform: event.platform,
           page: event.page,
+          searchQuery: event.searchQuery,
         );
         if (response.statusCode == 200) {
           game_model.GameModel gameModel =
