@@ -58,7 +58,8 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                               width: double.maxFinite,
                             ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12),
+                        padding: const EdgeInsets.only(
+                            left: 12, right: 12, bottom: 30),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -89,7 +90,9 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                                 style: releaseDateTextStyle),
                             const SizedBox(height: 4),
                             Text(
-                                "ESRB Rating: ${StringFormatter().stringNullFormatter(state.data.esrbRating!.name.toString())}",
+                                state.data.esrbRating == null
+                                    ? "ESRB Rating: N/A"
+                                    : "ESRB Rating: ${StringFormatter().stringNullFormatter(state.data.esrbRating!.name.toString())}",
                                 style: releaseDateTextStyle),
                             const SizedBox(height: 15),
                             const Divider(
