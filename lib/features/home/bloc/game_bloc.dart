@@ -24,9 +24,17 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           searchQuery: event.searchQuery,
         );
         if (response.statusCode == 200) {
-          game_model.GameModel gameModel =
-              game_model.gameModelFromJson(response.toString());
-          emit(GetGameDataSuccess(gameModel));
+          if (response.data["count"] != 0) {
+            game_model.GameModel gameModel =
+                game_model.gameModelFromJson(response.toString());
+            if (response.data['next'] != null) {
+              emit(GetGameDataSuccess(gameModel, true));
+            } else {
+              emit(GetGameDataSuccess(gameModel, false));
+            }
+          } else {
+            emit(GetGameDataEmpty());
+          }
         } else {
           systemLog(
               "Failed to get data with response code ${response.statusCode}");

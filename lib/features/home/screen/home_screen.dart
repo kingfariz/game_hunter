@@ -23,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isASC = false;
   String sortBy = "";
   int currentIndex = 1;
+  bool dismissPagination = true;
+
   @override
   void initState() {
     super.initState();
@@ -74,7 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   hintText: 'Cari', hintStyle: appbarSearchTextStyle),
             ),
           ),
-          function: () {
+          function: () async {
+            setState(() {
+              currentIndex = 1;
+            });
             getData(
                 page: "1",
                 searchQuery: searchCtrl.text.toString().trim(),
@@ -83,8 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: BlocConsumer<GameBloc, GameState>(
           listener: (context, state) {
+            if (state is GetGameDataEmpty) {
+              setState(() {
+                dismissPagination = true;
+                isloading = false;
+              });
+            }
             if (state is GetGameDataSuccess) {
               setState(() {
+                systemLog(state.statusNextPage.toString());
+                if (state.statusNextPage == false) {
+                  dismissPagination = true;
+                } else {
+                  dismissPagination = false;
+                }
                 isloading = false;
               });
             }
@@ -95,7 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
           builder: (context, state) {
-            if (state is GetGameDataSuccess) {
+            if (state is GetGameDataEmpty) {
+              return const SizedBox();
+            } else if (state is GetGameDataSuccess) {
               return ListView.builder(
                   itemCount: state.data.results == null
                       ? 0
@@ -121,12 +140,28 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if (currentIndex > 1) ...[
+          if (dismissPagination == false) ...[
+            if (currentIndex > 1) ...[
+              FloatingActionButton(
+                onPressed: () {
+                  if (currentIndex > 1) {
+                    currentIndex--;
+                  }
+                  getData(
+                      page: currentIndex.toString(),
+                      searchQuery: searchCtrl.text.toString().trim(),
+                      ordering: sortBy);
+                },
+                backgroundColor: softPrimaryColor,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                child: const Icon(Icons.arrow_back),
+              ),
+              const SizedBox(width: 20),
+            ],
             FloatingActionButton(
               onPressed: () {
-                if (currentIndex > 1) {
-                  currentIndex--;
-                }
+                currentIndex++;
                 getData(
                     page: currentIndex.toString(),
                     searchQuery: searchCtrl.text.toString().trim(),
@@ -135,23 +170,9 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: softPrimaryColor,
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4.0))),
-              child: const Icon(Icons.arrow_back),
+              child: const Icon(Icons.arrow_forward),
             ),
-            const SizedBox(width: 20),
           ],
-          FloatingActionButton(
-            onPressed: () {
-              currentIndex++;
-              getData(
-                  page: currentIndex.toString(),
-                  searchQuery: searchCtrl.text.toString().trim(),
-                  ordering: sortBy);
-            },
-            backgroundColor: softPrimaryColor,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4.0))),
-            child: const Icon(Icons.arrow_forward),
-          ),
         ],
       ),
     );
