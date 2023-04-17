@@ -69,7 +69,7 @@ class DetailGameModel {
     this.descriptionRaw,
   });
 
-  final int? id;
+  final String? id;
   final String? slug;
   final String? name;
   final String? nameOriginal;
@@ -82,36 +82,36 @@ class DetailGameModel {
   final String? backgroundImage;
   final String? backgroundImageAdditional;
   final String? website;
-  final int? rating;
-  final int? ratingTop;
+  final String? rating;
+  final String? ratingTop;
   final List<dynamic>? ratings;
   final Reactions? reactions;
-  final int? added;
+  final String? added;
   final AddedByStatus? addedByStatus;
-  final int? playtime;
-  final int? screenshotsCount;
-  final int? moviesCount;
-  final int? creatorsCount;
-  final int? achievementsCount;
-  final int? parentAchievementsCount;
+  final String? playtime;
+  final String? screenshotsCount;
+  final String? moviesCount;
+  final String? creatorsCount;
+  final String? achievementsCount;
+  final String? parentAchievementsCount;
   final String? redditUrl;
   final String? redditName;
   final String? redditDescription;
   final String? redditLogo;
-  final int? redditCount;
-  final int? twitchCount;
-  final int? youtubeCount;
-  final int? reviewsTextCount;
-  final int? ratingsCount;
-  final int? suggestionsCount;
+  final String? redditCount;
+  final String? twitchCount;
+  final String? youtubeCount;
+  final String? reviewsTextCount;
+  final String? ratingsCount;
+  final String? suggestionsCount;
   final List<dynamic>? alternativeNames;
   final String? metacriticUrl;
-  final int? parentsCount;
-  final int? additionsCount;
-  final int? gameSeriesCount;
+  final String? parentsCount;
+  final String? additionsCount;
+  final String? gameSeriesCount;
   final dynamic userGame;
-  final int? reviewsCount;
-  final int? communityRating;
+  final String? reviewsCount;
+  final String? communityRating;
   final String? saturatedColor;
   final String? dominantColor;
   final List<ParentPlatform>? parentPlatforms;
@@ -127,7 +127,7 @@ class DetailGameModel {
 
   factory DetailGameModel.fromJson(Map<String, dynamic> json) =>
       DetailGameModel(
-        id: json["id"],
+        id: json["id"].toString(),
         slug: json["slug"],
         name: json["name"],
         nameOriginal: json["name_original"],
@@ -144,44 +144,44 @@ class DetailGameModel {
         backgroundImage: json["background_image"],
         backgroundImageAdditional: json["background_image_additional"],
         website: json["website"],
-        rating: json["rating"],
-        ratingTop: json["rating_top"],
+        rating: json["rating"].toString(),
+        ratingTop: json["rating_top"].toString(),
         ratings: json["ratings"] == null
             ? []
             : List<dynamic>.from(json["ratings"]!.map((x) => x)),
         reactions: json["reactions"] == null
             ? null
             : Reactions.fromJson(json["reactions"]),
-        added: json["added"],
+        added: json["added"].toString(),
         addedByStatus: json["added_by_status"] == null
             ? null
             : AddedByStatus.fromJson(json["added_by_status"]),
-        playtime: json["playtime"],
-        screenshotsCount: json["screenshots_count"],
-        moviesCount: json["movies_count"],
-        creatorsCount: json["creators_count"],
-        achievementsCount: json["achievements_count"],
-        parentAchievementsCount: json["parent_achievements_count"],
+        playtime: json["playtime"].toString(),
+        screenshotsCount: json["screenshots_count"].toString(),
+        moviesCount: json["movies_count"].toString(),
+        creatorsCount: json["creators_count"].toString(),
+        achievementsCount: json["achievements_count"].toString(),
+        parentAchievementsCount: json["parent_achievements_count"].toString(),
         redditUrl: json["reddit_url"],
         redditName: json["reddit_name"],
         redditDescription: json["reddit_description"],
         redditLogo: json["reddit_logo"],
-        redditCount: json["reddit_count"],
-        twitchCount: json["twitch_count"],
-        youtubeCount: json["youtube_count"],
-        reviewsTextCount: json["reviews_text_count"],
-        ratingsCount: json["ratings_count"],
-        suggestionsCount: json["suggestions_count"],
+        redditCount: json["reddit_count"].toString(),
+        twitchCount: json["twitch_count"].toString(),
+        youtubeCount: json["youtube_count"].toString(),
+        reviewsTextCount: json["reviews_text_count"].toString(),
+        ratingsCount: json["ratings_count"].toString(),
+        suggestionsCount: json["suggestions_count"].toString(),
         alternativeNames: json["alternative_names"] == null
             ? []
             : List<dynamic>.from(json["alternative_names"]!.map((x) => x)),
         metacriticUrl: json["metacritic_url"],
-        parentsCount: json["parents_count"],
-        additionsCount: json["additions_count"],
-        gameSeriesCount: json["game_series_count"],
+        parentsCount: json["parents_count"].toString(),
+        additionsCount: json["additions_count"].toString(),
+        gameSeriesCount: json["game_series_count"].toString(),
         userGame: json["user_game"],
-        reviewsCount: json["reviews_count"],
-        communityRating: json["community_rating"],
+        reviewsCount: json["reviews_count"].toString(),
+        communityRating: json["community_rating"].toString(),
         saturatedColor: json["saturated_color"],
         dominantColor: json["dominant_color"],
         parentPlatforms: json["parent_platforms"] == null
@@ -303,12 +303,12 @@ class AddedByStatus {
     this.toplay,
   });
 
-  final int? owned;
-  final int? toplay;
+  final String? owned;
+  final String? toplay;
 
   factory AddedByStatus.fromJson(Map<String, dynamic> json) => AddedByStatus(
-        owned: json["owned"],
-        toplay: json["toplay"],
+        owned: json["owned"].toString(),
+        toplay: json["toplay"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -328,19 +328,19 @@ class Developer {
     this.language,
   });
 
-  final int? id;
+  final String? id;
   final String? name;
   final String? slug;
-  final int? gamesCount;
+  final String? gamesCount;
   final String? imageBackground;
   final String? domain;
   final Language? language;
 
   factory Developer.fromJson(Map<String, dynamic> json) => Developer(
-        id: json["id"],
+        id: json["id"].toString(),
         name: json["name"],
         slug: json["slug"],
-        gamesCount: json["games_count"],
+        gamesCount: json["games_count"].toString(),
         imageBackground: json["image_background"],
         domain: json["domain"],
         language: languageValues.map[json["language"]]!,
@@ -368,12 +368,12 @@ class EsrbRating {
     this.slug,
   });
 
-  final int? id;
+  final String? id;
   final String? name;
   final String? slug;
 
   factory EsrbRating.fromJson(Map<String, dynamic> json) => EsrbRating(
-        id: json["id"],
+        id: json["id"].toString(),
         name: json["name"],
         slug: json["slug"],
       );
@@ -447,24 +447,24 @@ class PlatformPlatform {
     this.imageBackground,
   });
 
-  final int? id;
+  final String? id;
   final String? name;
   final String? slug;
   final dynamic image;
   final dynamic yearEnd;
-  final int? yearStart;
-  final int? gamesCount;
+  final String? yearStart;
+  final String? gamesCount;
   final String? imageBackground;
 
   factory PlatformPlatform.fromJson(Map<String, dynamic> json) =>
       PlatformPlatform(
-        id: json["id"],
+        id: json["id"].toString(),
         name: json["name"],
         slug: json["slug"],
         image: json["image"],
         yearEnd: json["year_end"],
-        yearStart: json["year_start"],
-        gamesCount: json["games_count"],
+        yearStart: json["year_start"].toString(),
+        gamesCount: json["games_count"].toString(),
         imageBackground: json["image_background"],
       );
 
@@ -511,12 +511,12 @@ class Store {
     this.store,
   });
 
-  final int? id;
+  final String? id;
   final String? url;
   final Developer? store;
 
   factory Store.fromJson(Map<String, dynamic> json) => Store(
-        id: json["id"],
+        id: json["id"].toString(),
         url: json["url"],
         store: json["store"] == null ? null : Developer.fromJson(json["store"]),
       );
