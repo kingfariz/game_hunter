@@ -18,6 +18,9 @@ class GameDetailScreen extends StatefulWidget {
 class _GameDetailScreenState extends State<GameDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    String platformAvailabilityList = widget.gameModel.platforms!
+        .map((e) => e.platform!.name.toString())
+        .join(',');
     return SafeArea(
       child: Scaffold(
         backgroundColor: darkPrimaryColor,
@@ -67,16 +70,24 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Image.asset(
-                                  'assets/images/logo_ps5.png',
-                                  height: 14,
-                                ),
-                                const SizedBox(width: 4),
-                                const Icon(
-                                  Icons.desktop_windows_outlined,
-                                  color: lightgreyColor,
-                                  size: 14,
-                                ),
+                                if (platformAvailabilityList
+                                    .toLowerCase()
+                                    .contains("playstation 5")) ...[
+                                  Image.asset(
+                                    'assets/images/logo_ps5.png',
+                                    height: 14,
+                                  ),
+                                  const SizedBox(width: 4),
+                                ],
+                                if (platformAvailabilityList
+                                    .toLowerCase()
+                                    .contains("pc")) ...[
+                                  const Icon(
+                                    Icons.desktop_windows_outlined,
+                                    color: lightgreyColor,
+                                    size: 14,
+                                  ),
+                                ],
                               ],
                             ),
                             Text(widget.gameModel.name!, style: titleTextStyle),

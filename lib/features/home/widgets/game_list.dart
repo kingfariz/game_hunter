@@ -18,6 +18,10 @@ class GameList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String platformAvailabilityList = gameModel![index]
+        .platforms!
+        .map((e) => e.platform!.name.toString())
+        .join(',');
     return GestureDetector(
       onTap: function,
       child: ClipRRect(
@@ -65,16 +69,24 @@ class GameList extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Image.asset(
-                          'assets/images/logo_ps5.png',
-                          height: 14,
-                        ),
-                        const SizedBox(width: 4),
-                        const Icon(
-                          Icons.desktop_windows_outlined,
-                          color: lightgreyColor,
-                          size: 14,
-                        ),
+                        if (platformAvailabilityList
+                            .toLowerCase()
+                            .contains("playstation 5")) ...[
+                          Image.asset(
+                            'assets/images/logo_ps5.png',
+                            height: 14,
+                          ),
+                          const SizedBox(width: 4),
+                        ],
+                        if (platformAvailabilityList
+                            .toLowerCase()
+                            .contains("pc")) ...[
+                          const Icon(
+                            Icons.desktop_windows_outlined,
+                            color: lightgreyColor,
+                            size: 14,
+                          ),
+                        ],
                       ],
                     ),
                     Text(gameModel![index].name!, style: titleTextStyle),
