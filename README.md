@@ -20,3 +20,13 @@ debug the project by following the steps below:
 1. Open the project in your preferred code editor.
 2. Use `systemLog()` (lib/helpers/function/system_log.dart) to print out any variables or values you need to check.
 3. Run the app using the instructions above and check the console output for any errors or warnings.
+
+
+## Integration Test
+
+Integration test the project by following the steps below:
+
+1. Make sure you have an emulator set up for Android or iOS. You can also connect your physical device to your computer.
+2. Make sure to Install the necessary dependencies by running `flutter pub get`.
+3. Navigate and open (integration_test/bottomnav_test.dart).
+4. Press Run
