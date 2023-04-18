@@ -46,6 +46,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       top: true,
       child: IntroSlider(
         key: UniqueKey(),
+        nextButtonKey: const Key("nextButtonKey"),
+        doneButtonKey: const Key("doneButtonKey"),
         listContentConfig: listContentConfig,
         skipButtonStyle: ButtonStyle(
             foregroundColor: MaterialStateProperty.all<Color>(Colors.white)),
