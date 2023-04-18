@@ -30,3 +30,12 @@ Integration test the project by following the steps below:
 2. Make sure to Install the necessary dependencies by running `flutter pub get`.
 3. Navigate and open (integration_test/bottomnav_test.dart).
 4. Press Run
+
+
+
+
+## Screenshots
+
+![Onboarding Screen](https://i.ibb.co/1dsfxQn/onboarding-ss1.jpg)
+![Trending Screen](https://i.ibb.co/M8gxQrS/trending-ss.jpg)
+![Detail Screen](https://i.ibb.co/c1mV2TF/content-ss.jpg)
